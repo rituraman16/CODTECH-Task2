@@ -10,11 +10,11 @@ Output For Finite State Machine:
 ![344461385-347c557a-dd53-4827-b773-23d7fe3343e0](https://github.com/rituraman16/CODTECH-Task2/assets/173946342/9431b73f-0f36-4c76-8a87-108b0aabb34e)
 
 
-Project Overview: Designing and Testing a Finite State Machine (FSM) in Verilog using ModelSim
-Objective
+**Project Overview: Designing and Testing a Finite State Machine (FSM) in Verilog using ModelSim**
+**Objective**
 The primary objective of this project is to design, implement, simulate, and verify a Finite State Machine (FSM) using Verilog and ModelSim. The project aims to provide a practical understanding of FSM design in digital systems and demonstrate the use of hardware description languages (HDL) and simulation tools in the VLSI design process.
 
-Key Activities
+**Key Activities**
 FSM Design
 
 The FSM's state diagram, including states and transitions, was defined.
