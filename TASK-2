@@ -1,0 +1,124 @@
+
+// CODE AND TESTBENCH FOR FINITE STATE MACHINE //
+
+module fsm (
+    input clk,
+    input reset,
+    input in,
+    output reg [1:0] state
+);
+
+// State encoding
+parameter IDLE = 2'b00, STATE1 = 2'b01, STATE2 = 2'b10;
+
+// State register
+reg [1:0] current_state, next_state;
+
+// State transition logic
+always @ (posedge clk or posedge reset) begin
+    if (reset)
+        current_state <= IDLE;
+    else
+        current_state <= next_state;
+end
+
+// Next state logic
+always @ (*) begin
+    case (current_state)
+        IDLE: 
+            if (in)
+                next_state = STATE1;
+            else
+                next_state = IDLE;
+        STATE1: 
+            if (in)
+                next_state = STATE2;
+            else
+                next_state = IDLE;
+        STATE2: 
+            if (in)
+                next_state = IDLE;
+            else
+                next_state = STATE1;
+        default: 
+            next_state = IDLE;
+    endcase
+end
+
+// Output logic
+always @ (posedge clk or posedge reset) begin
+    if (reset)
+        state <= IDLE;
+    else
+        state <= current_state;
+end
+
+endmodule
+
+
+
+////////TESTBENCH//////////
+
+
+
+module fsm_tb;
+
+    // Inputs
+    reg clk;
+    reg reset;
+    reg in;
+
+    // Outputs
+    wire [1:0] state;
+
+    // Instantiate the FSM
+    fsm uut (
+        .clk(clk),
+        .reset(reset),
+        .in(in),
+        .state(state)
+    );
+
+    // Clock generation
+    always #5 clk = ~clk;
+
+    // Initial block to apply test vectors
+    initial begin
+        // Initialize inputs
+        clk = 0;
+        reset = 0;
+        in = 0;
+
+        // Apply reset
+        reset = 1;
+        #10;
+        reset = 0;
+
+        // Test sequence
+        // Test 1: Transition from IDLE to STATE1
+        in = 1;
+        #10;
+        in = 0;
+        #10;
+
+        // Test 2: Transition from STATE1 to STATE2
+        in = 1;
+        #10;
+        in = 0;
+        #10;
+
+        // Test 3: Transition from STATE2 to IDLE
+        in = 1;
+        #10;
+        in = 0;
+        #10;
+
+        // Test 4: Transition from IDLE to IDLE
+        in = 0;
+        #10;
+
+        // Finish simulation
+        $stop;
+    end
+
+endmodule
